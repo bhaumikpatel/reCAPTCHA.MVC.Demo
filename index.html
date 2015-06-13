@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    <meta charset="UTF-8">
+    <title>reCaptcha MVC by bhaumikpatel</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="stylesheets/normalize.css" media="screen">
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen">
+    <link rel="stylesheet" type="text/css" href="stylesheets/github-light.css" media="screen">
+  </head>
+  <body>
+    <section class="page-header">
+      <h1 class="project-name">reCaptcha MVC</h1>
+      <h2 class="project-tagline">Google reCAPTCHA for MVC 4 and 5</h2>
+      <a href="https://github.com/bhaumikpatel/reCAPTCHA.MVC.Demo" class="btn">View on GitHub</a>
+      <a href="https://github.com/bhaumikpatel/reCAPTCHA.MVC.Demo/zipball/master" class="btn">Download .zip</a>
+      <a href="https://github.com/bhaumikpatel/reCAPTCHA.MVC.Demo/tarball/master" class="btn">Download .tar.gz</a>
+    </section>
+
+    <section class="main-content">
+      <h1>
+<a id="google-recaptcha-mvc" class="anchor" href="#google-recaptcha-mvc" aria-hidden="true"><span class="octicon octicon-link"></span></a>Google reCAPTCHA MVC</h1>
+
+<p>Protect your website from spam and abuse while letting real people pass through with ease</p>
+
+<p><a href="http://recaptchamvc.apphb.com/"><strong>DEMO and Full Document</strong></a></p>
+
+<p>Basic useful feature list:</p>
+
+<ul>
+<li>reCAPTCHA API verion 2.0 Support</li>
+<li>The color theme of the widget. (dark, light)</li>
+<li>The type of CAPTCHA to serve. (audio, image)</li>
+</ul>
+
+<h3>
+<a id="installing-recaptcha-for-mvc" class="anchor" href="#installing-recaptcha-for-mvc" aria-hidden="true"><span class="octicon octicon-link"></span></a>Installing reCAPTCHA for MVC</h3>
+
+<p>If the Package Manager Console is not visible in your Microsoft Visual Studio IDE, click on the <strong>Tools &gt; Library Package Manager &gt; Package Manager Console</strong> menu.</p>
+
+<pre><code>PM&gt; Install-Package reCAPTCH.MVC
+</code></pre>
+
+<h3>
+<a id="how-to-set-recaptcha-key-in-webconfig-file" class="anchor" href="#how-to-set-recaptcha-key-in-webconfig-file" aria-hidden="true"><span class="octicon octicon-link"></span></a>How to Set reCAPTCHA Key in Web.config File</h3>
+
+<p>In the <strong>appSettings</strong> section of your web.config file, add the keys as follows:</p>
+
+<div class="highlight highlight-xml"><pre>&lt;<span class="pl-ent">appSettings</span>&gt;
+&lt;<span class="pl-ent">add</span> <span class="pl-e">name</span>=<span class="pl-s"><span class="pl-pds">"</span>reCaptchaPublicKey<span class="pl-pds">"</span></span> <span class="pl-e">value</span>=<span class="pl-s"><span class="pl-pds">"</span>Your site key<span class="pl-pds">"</span></span> /&gt;
+&lt;<span class="pl-ent">add</span> <span class="pl-e">name</span>=<span class="pl-s"><span class="pl-pds">"</span>reCaptchaPrivateKey<span class="pl-pds">"</span></span> <span class="pl-e">value</span>=<span class="pl-s"><span class="pl-pds">"</span>Your secret key<span class="pl-pds">"</span></span> /&gt;
+&lt;/<span class="pl-ent">appSettings</span>&gt;</pre></div>
+
+<p><strong>Note:</strong> The <strong>appSettings</strong> keys are automatically added to your web.config file if you install reCAPTCHA for .NET through Nuget. However, you would still need to provide your own public and private keys in the web.config file of your project.</p>
+
+<h3>
+<a id="how-to-use-recaptcha-in-mvc-web-application" class="anchor" href="#how-to-use-recaptcha-in-mvc-web-application" aria-hidden="true"><span class="octicon octicon-link"></span></a>How to Use reCAPTCHA in MVC Web Application</h3>
+
+<div class="highlight highlight-csharp"><pre>@<span class="pl-k">using</span> reCAPTCHA.MVC
+@<span class="pl-k">using</span> (Html.BeginForm())
+{
+    @Html.Recaptcha(publicKey:<span class="pl-s"><span class="pl-pds">"</span>xxxxxxxxxxxxx<span class="pl-pds">"</span></span>,theme: CaptchaTheme.Dark,type:CaptchaType.Image, 
+            callback: <span class="pl-s"><span class="pl-pds">"</span>verifyCallback<span class="pl-pds">"</span></span>,expiredCallback:<span class="pl-s"><span class="pl-pds">"</span>expiredCallback<span class="pl-pds">"</span></span>)
+
+    &lt;!-- OR --&gt;
+    @Html.Recaptcha()
+
+    @Html.ValidationMessage(<span class="pl-s"><span class="pl-pds">"</span>ReCaptcha<span class="pl-pds">"</span></span>)
+    &lt;input type=<span class="pl-s"><span class="pl-pds">"</span>submit<span class="pl-pds">"</span></span> <span class="pl-k">value</span>=<span class="pl-s"><span class="pl-pds">"</span>Register<span class="pl-pds">"</span></span> /&gt;
+}</pre></div>
+
+      <footer class="site-footer">
+        <span class="site-footer-owner"><a href="https://github.com/bhaumikpatel/reCAPTCHA.MVC.Demo">reCaptcha MVC</a> is maintained by <a href="https://github.com/bhaumikpatel">bhaumikpatel</a>.</span>
+
+        <span class="site-footer-credits">This page was generated by <a href="https://pages.github.com">GitHub Pages</a> using the <a href="https://github.com/jasonlong/cayman-theme">Cayman theme</a> by <a href="https://twitter.com/jasonlong">Jason Long</a>.</span>
+      </footer>
+
+    </section>
+
+  
+  </body>
+</html>
+
