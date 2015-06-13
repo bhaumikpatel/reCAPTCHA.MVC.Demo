@@ -1,0 +1,74 @@
+﻿@using reCAPTCHA.MVC
+@model reCAPTCHA.Web.Demo.Models.RegisterModel
+@{
+    ViewBag.Title = "Google reCAPTCH Demo MVC 4 And 5";
+}
+@section featuredHeader {
+    <div class="col-md-12">
+        <div class="page-header">
+            <div class="row">
+                <div class="col-md-7"><h1>Google reCAPTCHA for MVC 4 and 5</h1></div>
+                <div class="col-md-5"><img src="~/Content/images/hero-recaptcha-demo.gif" alt="Google reCAPTCH for MVC" class="img-responsive" /></div>
+            </div>
+        </div>
+    </div>
+}
+<div class="row">
+    <div class="col-md-5">
+        <h2>Create a new account. - DEMO</h2>
+        @using (Html.BeginForm())
+         {
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <label>@Html.LabelFor(m => m.UserName)</label>
+                        @Html.TextBoxFor(m => m.UserName, new { @class = "form-control input-sm" })
+                        @Html.ValidationMessageFor(m => m.UserName)
+                    </div>
+                </div>
+                <div class="clearfix"></div>
+                <div class="col-md-12">
+                    <div class="form-group" style="min-height: 105px;">
+                        <label>Are you robot?</label>
+                        @Html.Recaptcha(theme: CaptchaTheme.Dark)
+                        @Html.ValidationMessage("ReCaptcha")
+                    </div>
+                </div>
+            </div>
+            <input type="submit" class="btn btn-success btn-sm" value="Register" />
+         }
+        @if (Model.IsSuccess == true)
+        {<hr />
+        <div class="alert alert-success" role="alert">Registration done successfully.</div>
+        }
+    </div>
+    <div class="col-md-7">
+        <h3 class="text-success">Quick Started</h3>
+        <hr />
+        <h4 class="text-warning">reCAPTCHA Nuget Package</h4>
+        <pre><code>PM&gt; Install-Package reCAPTCH.MVC</code></pre>
+        <p>After install set key in the <strong>appSettings</strong> section of your <strong>web.config</strong> file.</p>
+        <p>Add Recaptcha in your view.</p>
+        <pre><code>@@using reCAPTCHA.MVC
+@@using (Html.BeginForm())
+{
+    @@Html.Recaptcha()
+    @@Html.ValidationMessage("ReCaptcha")
+    &lt;input type=&quot;submit&quot; value=&quot;Register&quot; /&gt;
+}</code></pre>
+       <p>Verifying the user's response</p>
+        <pre><code>[HttpPost]
+[CaptchaValidator]
+public ActionResult Index(RegisterModel registerModel, bool captchaValid)
+{
+    if (ModelState.IsValid)
+    {
+    }
+    return View(registerModel);
+}</code></pre>
+    </div>
+</div>
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
+

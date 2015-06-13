@@ -1,0 +1,47 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="title" content="Google reCAPTCHA for MVC 4 and 5" />
+    <meta name="keywords" content="mvc captcha, google captcha, mvc" />
+    <meta name="description" content="Google reCAPTCHA for MVC 4 and 5, Implement Captcha for ASP.NET MVC Razor, nuget reCAPTCHA mvc" />
+    <meta name="subject" content="Google reCAPTCHA for MVC 4 and 5" />
+    <meta name="robots" content="INDEX,FOLLOW" />
+    <meta name="author" content="Bhaumik Patel" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
+    <title>@ViewBag.Title</title>
+    <link href="~/favicon.ico" rel="shortcut icon" type="image/x-icon" />
+    <meta name="viewport" content="width=device-width" />
+    @Styles.Render("~/Content/flatUi", "~/Content/css")
+</head>
+<body>
+    @Html.Partial("_header")
+    <header>
+        <div class="content-wrapper-inverse">
+            <div class="container">
+                <div class="row">
+                    @RenderSection("featuredHeader", required: false)
+                </div>
+            </div>
+        </div>
+    </header>
+    <div class="container">
+        @RenderSection("featured", required: false)
+        @RenderBody()
+    </div>
+    <footer class="footer">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6 copyright">
+                    <p>Develop by - Bhaumik Patel</p>
+                </div>
+                <div class="col-md-6 text-right">
+                    <p><a href="@Url.Action("Document")" title="How it works"><span>Document</span></a></p>
+                </div>
+            </div>
+        </div>
+    </footer>
+    @Scripts.Render("~/bundles/jquery")
+    @RenderSection("scripts", required: false)
+</body>
+</html>

@@ -1,0 +1,188 @@
+﻿@{
+    ViewBag.Title = "Google reCAPTCH Document MVC";
+}
+@section featuredHeader {
+    <div class="col-md-12">
+        <div class="page-header">
+            <h1>
+                <img src="~/Content/images/recaptcha_48dp.png" alt="reCAPTCH MVC" />
+                Google reCAPTCHA MVC Document</h1>
+        </div>
+    </div>
+}
+<h2>Developer's Guide</h2>
+<div class="row">
+    <div class="col-md-9">
+        <h2>Welcome to reCAPTCHA library for MVC</h2>
+        <p>ReCAPTCHA lets you embed a CAPTCHA in your web pages in order to protect them against spam and other types of automated abuse. Here, we explain how to add reCAPTCHA to your page.</p>
+        <p>reCAPTCHA for .NET is an open source .NET library that allows developers to easily use Google's reCAPTCHA in MVC web applications.</p>
+        <h3 class="text-success">Features</h3>
+        <p>The primary features of the library are:</p>
+        <ul>
+            <li>reCAPTCHA API verion 2.0 Support</li>
+            <li>The color theme of the widget. (dark, light)</li>
+            <li>The type of CAPTCHA to serve. (audio, image)</li>
+        </ul>
+        <hr />
+        <h3 class="text-success">Creating a reCAPTCHA Keys</h3>
+        <p>Before you can use reCAPTCHA in your web application, you must first create a reCAPTCHA key (a pair of public and private keys). Creating reCAPTCHA key is very straight-forward. The following are the steps:</p>
+        <ol>
+            <li>Go to the Google's <a href="https://www.google.com/recaptcha" rel="nofollow">reCAPTCHA</a> site.</li>
+            <li>Click on the <strong>Get reCAPTCHA</strong> button. You will be required to login with your Google account.</li>
+            <li>Enter a label for this reCAPTCHA and the domain of your web application. You can enter more than one domain if you want to.</li>
+            <li>Expand <strong>Keys</strong> under the <strong>Adding reCAPTCHA to your site</strong> section. Note down your <strong>Site Key</strong> and <strong>Secret Key</strong>.</li>
+        </ol>
+        <hr />
+        <h3 class="text-success">Installing reCAPTCHA for MVC</h3>
+        <h4 class="text-info">reCAPTCHA Nuget Package</h4>
+        <p>If the Package Manager Console is not visible in your Microsoft Visual Studio IDE, click on the <strong>Tools &gt; Library Package Manager &gt; Package Manager Console</strong> menu.</p>
+        <br />
+        <pre><code>PM&gt; Install-Package reCAPTCH.MVC</code></pre>
+        <hr />
+        <h4 class="text-info">How to Set reCAPTCHA Key in Web.config File</h4>
+        <p>In the <strong>appSettings</strong> section of your web.config file, add the keys as follows:</p>
+        <pre><code>&lt;appSettings&gt;
+&lt;add name="reCaptchaPublicKey" value="Your site key" /&gt;
+&lt;add name="reCaptchaPrivateKey" value="Your secret key" /&gt;
+&lt;/appSettings&gt;
+</code></pre>
+        <p><strong>Note</strong>: The <strong>appSettings</strong> keys are automatically added to your web.config file if you install reCAPTCHA for .NET through Nuget. However, you would still need to provide your own public and private keys in the web.config file of your project.</p>
+        <hr />
+        <h3 class="text-success">How to Use reCAPTCHA in MVC Web Application</h3>
+        <h4 class="text-info">Add the reCAPTCHA Control to Your MVC View</h4>
+        <pre><code>@@using reCAPTCHA.MVC
+@@using (Html.BeginForm())
+{
+    @@Html.Recaptcha(publicKey:"xxxxxxxxxxxxx",theme: CaptchaTheme.Dark,type:CaptchaType.Image, 
+            callback: "verifyCallback",expiredCallback:"expiredCallback")
+
+    &lt;!-- OR --&gt;
+    @@Html.Recaptcha()
+
+    @@Html.ValidationMessage("ReCaptcha")
+    &lt;input type=&quot;submit&quot; value=&quot;Register&quot; /&gt;
+}</code></pre>
+        <h4 class="text-info">reCAPTCHA Callback</h4>
+        <pre><code>&lt;script&gt;
+var verifyCallback = function (response) {
+    alert(&quot;grecaptcha is ready!&quot;);
+};
+
+var expiredCallback = function () {
+    alert(&quot;grecaptcha is expired!&quot;);
+};
+&lt;/script&gt;</code></pre>
+        <hr />
+        <h3 class="text-success">Attributes and render parameters</h3>
+        <div class="table-responsive">
+            <table class="table table-bordered table-striped">
+                <tbody>
+                    <tr>
+                        <th>Parameter</th>
+                        <th>Value</th>
+                        <th>Default</th>
+                        <th>Description</th>
+                    </tr>
+                    <tr>
+                        <td>publicKey</td>
+                        <td></td>
+                        <td></td>
+                        <td>Your sitekey.</td>
+                    </tr>
+                    <tr>
+                        <td>theme</td>
+                        <td>Dark, Light</td>
+                        <td>Light</td>
+                        <td>Optional. The color theme of the widget.</td>
+                    </tr>
+                    <tr>
+                        <td>type</td>
+                        <td>Audio, Image</td>
+                        <td>Image</td>
+                        <td>Optional. The type of CAPTCHA to serve.</td>
+                    </tr>
+                    <tr>
+                        <td>callback</td>
+                        <td></td>
+                        <td></td>
+                        <td>Optional. Your callback function that's executed when the user submits a successful CAPTCHA response. will be the input for your callback function.</td>
+                    </tr>
+                    <tr>
+                        <td>expiredCallback</td>
+                        <td></td>
+                        <td></td>
+                        <td>Optional. Your callback function that's executed when the recaptcha response expires and the user needs to solve a new CAPTCHA.</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+         <hr />
+        <h3 class="text-success">Verifying the user's response</h3>
+        <pre><code>public class HomeController : Controller
+{
+    [HttpPost]
+    [CaptchaValidator(
+        PrivateKey = &quot;xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx&quot;,
+        ErrorMessage = &quot;Invalid input captcha.&quot;,
+        RequiredMessage = &quot;The captcha field is required.&quot;)]
+    public ActionResult Index(RegisterModel registerModel, bool captchaValid)
+    {
+        if (ModelState.IsValid)
+        {
+
+        }
+
+        return View(registerModel);
+    }
+}</code></pre>
+        <hr />
+        <h3 class="text-success">Attributes parameters for Captcha Validator</h3>
+        <div class="table-responsive">
+            <table class="table table-bordered table-striped">
+                <tbody>
+                    <tr>
+                        <th>Parameter</th>
+                        <th>Default</th>
+                        <th>Description</th>
+                    </tr>
+                    <tr>
+                        <td>PrivateKey</td>
+                        <td></td>
+                        <td>Optional. Your site secret key.</td>
+                    </tr>
+                    <tr>
+                        <td>ErrorMessage</td>
+                        <td>Incorrect Captcha</td>
+                        <td>Optional. Custom validation message for user incorrect captch input.</td>
+                    </tr>
+                    <tr>
+                        <td>RequiredMessage</td>
+                        <td>Captcha field is required.</td>
+                        <td>Optional. The error message that is associated with the validation control.</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+         <hr />
+        <h3 class="text-success">Captcha Validation Using AJAX BeginForm</h3>
+        <pre><code>@@using (Ajax.BeginForm(&quot;Index&quot;, &quot;Home&quot;, new AjaxOptions { OnBegin = &quot;onBeginSubmit&quot; }))
+{
+    @@Html.Recaptcha(theme: CaptchaTheme.Dark)
+         
+    &lt;input type=&quot;submit&quot; value=&quot;Register&quot; /&gt;
+}
+
+&lt;script&gt;
+    var onBeginSubmit = function () {
+        var v = grecaptcha.getResponse();
+        if (v.length == 0) {
+            alert(&quot;You can&#39;t leave without Captcha.&quot;);
+            return false;
+        }
+    };
+&lt;/script&gt;
+</code></pre>
+    </div>
+    <div class="col-md-3">
+    </div>
+</div>
