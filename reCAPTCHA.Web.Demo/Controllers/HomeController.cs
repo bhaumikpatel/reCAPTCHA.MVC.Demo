@@ -19,7 +19,7 @@ namespace reCAPTCHA.Web.Demo.Controllers
 
         [HttpPost]
         [CaptchaValidator(
-            PrivateKey = "6Ld6dv4SAAAAACvVe_yBoU40P4Fo4NE3dJRda0Fk",
+            PrivateKey = "6LcKYQwTAAAAACtpYk5RBqqxgm5G1xVDGq7RH4QK",
             ErrorMessage = "Invalid input captcha.",
             RequiredMessage = "The captcha field is required.")]
         public ActionResult Index(RegisterModel registerModel, bool captchaValid)
